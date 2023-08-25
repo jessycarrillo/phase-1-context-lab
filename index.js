@@ -1,13 +1,55 @@
-/* Your Code Here */
+function createEmployeeRecord(attributes){
+    const employeeInfo = {
+        firstName: attributes[0],
+        familyName: attributes[1],
+        title: attributes[2],
+        payPerHour: attributes[3],
+        timeInEvents: [], 
+        timeOutEvents:[] 
+    }
+    return employeeInfo;
+}
 
-/*
- We're giving you this function. Take a look at it, you might see some usage
- that's new and different. That's because we're avoiding a well-known, but
- sneaky bug that we'll cover in the next few lessons!
+function createTimeInEvent(dateStamp) {
+    const [date, time] = dateStamp.split(' ');
+    const timeInEvent = {
+        type: "TimeIn",
+        hour: parseInt(time),
+        date: date
+    };
+    this.timeInEvents.push(timeInEvent);
+    return this;
+}
+function createTimeOutEvent(dateStamp) {
+    const [date, time] = dateStamp.split(' ');
+    const timeOutEvent = {
+        type: "TimeOut",
+        hour: parseInt(time),
+        date: date
+    };
+    this.timeOutEvents.push(timeOutEvent);
+    return this;
+}
+function hoursWorkedOnDate(dateStamp) {
+    let timeInEvent = this.timeInEvents.find(value => value.date === dateStamp);
+    let timeOutEvent = this.timeOutEvents.find(value => value.date === dateStamp);
+    return (timeOutEvent.hour - timeInEvent.hour)/100
+ } 
 
- As a result, the lessons for this function will pass *and* it will be available
- for you to use if you need it!
- */
+ function wagesEarnedOnDate(dateStamp){
+    return this.payPerHour * hoursWorkedOnDate.call(this, dateStamp)
+}
+
+function findEmployeeByFirstName(collection, firstNameString) {
+    const employee = collection.find(({ firstName }) => firstName === firstNameString);
+    return employee; 
+}
+function calculatePayroll(employeeRecords) {
+    const totalPayroll = employeeRecords.reduce(function (total, employee) {
+        return total + allWagesFor.call(employee);
+    }, 0);
+    return totalPayroll;
+}
 
 const allWagesFor = function () {
     const eligibleDates = this.timeInEvents.map(function (e) {
@@ -21,3 +63,7 @@ const allWagesFor = function () {
     return payable
 }
 
+function createEmployeeRecords(arrayOfArrays) {
+    return arrayOfArrays.map(createEmployeeRecord);
+  
+  }
